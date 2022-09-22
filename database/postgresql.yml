@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+
+  postgresql:
+    container_name: postgresql
+    hostname: postgresql
+    image: postgres:14
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./backup:/backup
+      - /var/run/docker.sock:/var/run/docker.sock
+      - type: bind
+        source: /caminho/data_postgresql
+        target: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    shm_size: '1gb'
+    networks:
+      - Nome_da_sua_rede
+
+networks:
+  Nome_da_sua_rede:
+    external:
+      name: Nome_da_sua_rede
+      
+      
+#### CONTEUDO DOARQUIVO .ENV CITADO NA VARIAVEL ENV_FILE:
+
+#POSTGRES
+POSTGRES_USER=<USER>
+POSTGRES_PASSWORD=<SENHA_DB>
+TZ=America/Sao_Paulo
