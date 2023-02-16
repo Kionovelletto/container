@@ -1,0 +1,8 @@
+DUMP ALL DATABASES:
+docker exec -t <ID_CONTAINER> pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M_%S`.backup
+
+DUMP ONE DATABASE:
+docker exec -t <ID_CONTAINER> pg_dump -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M_%S`.backup
+
+RESTORE:
+docker exec -i <ID_CONTAINER> pg_restore --host localhost --port 5432 --username "USER" --dbname "DATABASE" --verbose < /PATH/NAME_DUMP.backup
