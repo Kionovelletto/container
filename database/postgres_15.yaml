@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+
+  postgres15:
+    container_name: postgres15
+    hostname: postgres15
+    image: postgres:15.2
+    restart: always
+    environment:
+      - POSTGRES_USER=my_user
+      - POSTGRES_PASSWORD=my_passwd
+      - TZ=America/Sao_Paulo
+    volumes:
+      - /postgres15/dump:/dump
+      - /var/run/docker.sock:/var/run/docker.sock
+      - type: bind
+        source: /postgres15/psql_volume
+        target: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    shm_size: '1gb'
