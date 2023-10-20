@@ -1,0 +1,54 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - timeout: "10s"
+      static_configs:
+        - targets: ["alertmanager:9093"]
+
+rule_files:
+
+scrape_configs:
+
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  #- job_name: 'node'
+    #metrics_path: /metrics  
+    #scrape_interval: 10s
+    #static_configs:
+      #a- targets: ['nodeexporter:9100']
+
+  - job_name: blackbox_all
+    metrics_path: /probe
+    params:
+      module: [ http_2xx ]
+    dns_sd_configs:
+      - names:
+          - api-ritaiobeiras-mg.sistemaasgard.com.br/api/v2/monitor/public/pending-requests/15
+          - prometheus.io
+        type: A
+        port: 443
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+        replacement: https://$1/
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox_exporter:9115
+      - source_labels: [__meta_dns_name]
+        target_label: __param_hostname
+      - source_labels: [__meta_dns_name]
+        target_label: vhost
+
+  - job_name: 'pending-requests'
+    metrics_path: '/api/v2/monitor/public/pending-requests/15'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['api-ritaiobeiras-mg.sistemaasgard.com.br']
+        labels:
+          application: 'ritaiobeiras-mg'
