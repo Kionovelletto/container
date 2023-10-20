@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.9'
 
 services:
 
@@ -6,7 +6,7 @@ services:
     container_name: prometheus
     image: prom/prometheus
     dns:
-      - 10.0.0.115    
+      - 1.1.1.1
     volumes:
       - ./config_prometheus:/etc/prometheus
       - ./prometheus_data:/prometheus
@@ -17,7 +17,7 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - "9090:9090"
-    restart: always
+    restart: always  
     networks:
       - observabilidade
 
@@ -32,6 +32,35 @@ services:
       - "9093:9093"
     networks:
       - observabilidade
+
+  blackbox_exporter:
+    image: quay.io/prometheus/blackbox-exporter:latest
+    container_name: blackbox_exporter
+    dns:
+      - 1.1.1.1 
+    volumes:
+      - ./black_box/config:/etc/blackbox
+    command:
+      - --config.file=/etc/blackbox/blackbox.yml
+    ports:
+      - "9115:9115"
+    networks:
+      - observabilidade
+  
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+    env_file:
+      - ./grafana/data/grafana.config
+    ports:
+      - 3000:3000
+    networks:
+      - observabilidade
+
+networks:
+  observabilidade:
 
   # Descomente e ajuste as configurações para o nodeexporter se necessário
   #nodeexporter:
@@ -53,21 +82,4 @@ services:
   #  ports:
   #    - "9100:9100"
   #  networks:
-  #    - observabilidade
-
-  blackbox_exporter:
-    image: quay.io/prometheus/blackbox-exporter:latest
-    container_name: blackbox_exporter
-    dns:
-      - 10.0.0.115      
-    volumes:
-      - ./black_box/config:/config
-    command:
-      - --config.file=/config/blackbox.yml
-    ports:
-      - "9115:9115"
-    networks:
-      - observabilidade
-
-networks:
-  observabilidade:
+  #    - observabilidade  
