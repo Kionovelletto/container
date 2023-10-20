@@ -1,0 +1,14 @@
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 1m
+  repeat_interval: 1m
+  receiver: 'telegram'
+
+receivers:
+- name: 'telegram'
+  webhook_configs:
+  - send_resolved: true
+    url: 'https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage?chat_id=-963976117'
+    http_config:
+      bearer_token: '6167178861:AAEgmKd07-AV5xTvF6iXxYR5sl3RMm9lEQ0'
