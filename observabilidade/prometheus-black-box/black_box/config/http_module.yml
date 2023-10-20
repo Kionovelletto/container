@@ -1,0 +1,5 @@
+http:
+  valid_http_versions: [HTTP/1.1, HTTP/2]
+  valid_status_codes: [200]
+  fail_if_ssl: true
+  fail_if_not_ssl: false  # Define como "true" se desejar falhar se o SSL estiver configurado e você não quiser.
