@@ -1,0 +1,5 @@
+- targets:
+  - https://www.globo.com
+  - https://www.terra.com.br
+  labels:
+    client: nomes
