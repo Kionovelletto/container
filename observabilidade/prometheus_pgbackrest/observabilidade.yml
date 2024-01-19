@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    user: root
+    container_name: prometheus
+    hostname: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - ./prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - 9090:9090
+    networks:
+      - observability
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+    env_file:
+      - ./grafana/data/grafana.config    
+    ports:
+      - "3000:3000"
+    networks:
+      - observability
+
+  pgbackrest_exporter:
+    container_name: pgbackrest_exporter
+    image: woblerr/pgbackrest_exporter
+    environment:
+        - BACKREST_USER=postgres
+        - BACKREST_UID=1001
+        - BACKREST_GROUP=postgres
+        - BACKREST_GID=1001
+        - TZ=America/Sao_Paulo
+        - COLLECT_INTERVAL=60
+        - BACKUP_TYPE=full
+        - DATABASE_COUNT_LATEST=true
+        - STANZA_INCLUDE=srvpgprd01          
+    ports:
+        - 9854:9854
+    volumes:
+        - /etc/pgbackrest/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf
+    networks:
+      - observability
+
+networks:
+  observability:
+    driver: bridge
