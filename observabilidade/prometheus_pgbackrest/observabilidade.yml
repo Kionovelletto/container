@@ -1,5 +1,5 @@
 version: '3.4'
-# docker network create -d --driver bridge observability
+
 services:
 
   prometheus:
@@ -54,12 +54,11 @@ services:
 
   postgres_exporter:
     container_name: postgres_exporter
-    image: wrouesnel/postgres_exporter    
-    network_mode: host
     environment:
-        - DATA_SOURCE_NAME=postgresql://nexfar:Dell2024@@192.168.107.146:5432/postgres?sslmode
+        - DATA_SOURCE_NAME=postgresql://user:senha@@ip_address:5432/postgres?sslmode
+    image: wrouesnel/postgres_exporter
     ports:
-      - 9187:9187
+       - "9187:9187"
     networks:
       - observability
 
