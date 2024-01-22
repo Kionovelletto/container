@@ -1,6 +1,7 @@
 version: '3.4'
-
+# docker network create -d --driver bridge observability
 services:
+
   prometheus:
     image: prom/prometheus
     user: root
@@ -10,13 +11,14 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - ./prometheus_data:/prometheus
+    ports:
+      - 9090:9090
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-    ports:
-      - 9090:9090
     networks:
-      - observability
+      - observability      
+
 
   grafana:
     image: grafana/grafana
@@ -47,6 +49,17 @@ services:
         - 9854:9854
     volumes:
         - /etc/pgbackrest/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf
+    networks:
+      - observability
+
+  postgres_exporter:
+    container_name: postgres_exporter
+    image: wrouesnel/postgres_exporter    
+    network_mode: host
+    environment:
+        - DATA_SOURCE_NAME=postgresql://nexfar:Dell2024@@192.168.107.146:5432/postgres?sslmode
+    ports:
+      - 9187:9187
     networks:
       - observability
 
