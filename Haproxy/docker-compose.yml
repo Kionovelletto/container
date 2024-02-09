@@ -5,7 +5,7 @@ version: '3.3'
 services:
     haproxy:
         container_name: haproxy
-        image: haproxytech/haproxy-alpine:2.5
+        image: haproxytech/haproxy-alpine:2.9
         volumes:
             - ./conf:/usr/local/etc/haproxy:ro
         sysctls:
