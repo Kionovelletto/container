@@ -3,7 +3,9 @@ Diretório com diversos itens para Haproxy.
 
 ##
 Nos volumes do manifesto, no service do Haproxy utilize apenas um volume por vez.
+
 Por exemplo: 
+
     - Caso queira testar o load balance, descomente o último volume e comente o primeiro;
     - Caso gostaria de testar o proxy reverso, comente a linha do load balance e descomente a do reverse proxy.
 ```yaml
