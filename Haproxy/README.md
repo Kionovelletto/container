@@ -19,3 +19,7 @@ Caso persistir, executar o docker-compose como sudo:
 ```yaml
 sudo docker-compose up
 ```
+Após os containers iniciarem, você pode:
+- Acessar a página de status dos frontends e backends = http://localhost:8404/stats
+- Acessar a página que faz o load balance = http://localhost
+- Acessar o proxy reverso = http://localhost/web03
