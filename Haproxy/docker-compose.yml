@@ -7,7 +7,8 @@ services:
         container_name: haproxy
         image: haproxytech/haproxy-alpine:2.9
         volumes:
-            - ./conf:/usr/local/etc/haproxy:ro
+            #- ./conf/haproxy_reverse_proxy.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher entre o load balance ou proxy reverso para testar)
+            - ./conf/haproxy_load_balance.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher entre o load balance ou proxy reverso para testar)
         sysctls:
             - net.ipv4.ip_unprivileged_port_start=0            
         ports:
@@ -33,6 +34,16 @@ services:
             - ./web-conf2:/usr/share/nginx/html
         ports:
             - 8081:80
+        networks:
+            - proxy
+
+    web03:
+        container_name: web03
+        image: nginx        
+        volumes:
+            - ./web-conf3/web03/:/usr/share/nginx/html/web03
+        ports:
+            - 8082:80
         networks:
             - proxy
 
