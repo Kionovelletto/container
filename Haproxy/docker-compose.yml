@@ -1,0 +1,42 @@
+version: '3.3'
+# Executar o compose como root(sudo)
+# sudo docker network create --driver=bridge proxy
+# Access manager haproxy http://localhost:8404/stats
+services:
+    haproxy:
+        container_name: haproxy
+        image: haproxytech/haproxy-alpine:2.5
+        volumes:
+            - ./conf:/usr/local/etc/haproxy:ro
+        sysctls:
+            - net.ipv4.ip_unprivileged_port_start=0            
+        ports:
+            - 80:80
+            - 8404:8404
+        networks:
+            - proxy            
+
+    web01:
+        container_name: web01
+        image: nginx        
+        volumes:
+            - ./web-conf1:/usr/share/nginx/html
+        ports:
+            - 8080:80
+        networks:
+            - proxy
+
+    web02:
+        container_name: web02
+        image: nginx        
+        volumes:
+            - ./web-conf2:/usr/share/nginx/html
+        ports:
+            - 8081:80
+        networks:
+            - proxy
+
+networks:
+    proxy:
+        external: true
+        name: proxy
