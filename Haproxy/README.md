@@ -31,3 +31,5 @@ Após os containers iniciarem, você pode:
 - Acessar o redirect = http://localhost
 - Acessar o deny por palavras como = http://localhost/web03/teste=username | http://localhost/web03/teste=password
 - Acessar o proxy reverso do postgresql = seuenderecoip:5432 (user e passwd no manifesto)
+
+Documentação oficial: https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#3.7
