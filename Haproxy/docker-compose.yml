@@ -10,7 +10,8 @@ services:
             #- ./conf/haproxy_reverse_proxy.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
             #- ./conf/haproxy_load_balance.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
             #- ./conf/haproxy_redirect.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
-            - ./conf/haproxy_deny.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
+            #- ./conf/haproxy_deny.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
+            - ./conf/haproxy_mensage_log.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
         sysctls:
             - net.ipv4.ip_unprivileged_port_start=0            
         ports:
