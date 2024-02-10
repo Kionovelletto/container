@@ -7,7 +7,8 @@ Nos volumes do manifesto, no service do Haproxy utilize apenas um volume por vez
 Por exemplo: 
 
 - Caso queira testar o load balance, descomente o último volume e comente o primeiro;
-- Caso gostaria de testar o proxy reverso, comente a linha do load balance e descomente a do reverse proxy.
+- Caso gostaria de testar o proxy reverso, comente a linha do load balance e descomente a do reverse proxy;
+- Assim por diante, para testar os demais.
 ```yaml
 volumes:
  - ./conf/haproxy_reverse_proxy.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
