@@ -14,6 +14,8 @@ volumes:
  #- ./conf/haproxy_load_balance.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
  #- ./conf/haproxy_redirect.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
  #- ./conf/haproxy_deny.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
+ #- ./conf/haproxy_mensage_log.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
+ #- ./conf/haproxy_potsgresql.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
 ```
 
 Tendo problemas para executar o compose, acrescente na última linha de cada .cfg uma linha em branco.
@@ -27,3 +29,4 @@ Após os containers iniciarem, você pode:
 - Acessar o proxy reverso = http://localhost/web03
 - Acessar o redirect = http://localhost
 - Acessar o deny por palavras como = http://localhost/web03/teste=username | http://localhost/web03/teste=password
+- Acessar o proxy reverso do postgresql = seuenderecoip:5432 (user e passwd no manifesto)

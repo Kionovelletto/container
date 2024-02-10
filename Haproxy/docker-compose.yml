@@ -7,11 +7,12 @@ services:
         container_name: haproxy
         image: haproxytech/haproxy-alpine:2.9
         volumes:
-            #- ./conf/haproxy_reverse_proxy.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
+            - ./conf/haproxy_reverse_proxy.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
             #- ./conf/haproxy_load_balance.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
             #- ./conf/haproxy_redirect.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
             #- ./conf/haproxy_deny.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
-            - ./conf/haproxy_mensage_log.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
+            #- ./conf/haproxy_mensage_log.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
+            #- ./conf/haproxy_potsgresql.cfg:/usr/local/etc/haproxy/haproxy.cfg #(Escolher apenas um dos volumes para testar)
         sysctls:
             - net.ipv4.ip_unprivileged_port_start=0            
         ports:
@@ -50,6 +51,26 @@ services:
         networks:
             - proxy
 
+    pgsql:
+        container_name: pgsql
+        hostname: pgsql
+        image: postgres:14
+        restart: always
+        environment:
+        - POSTGRES_USER=cafecombuild
+        - POSTGRES_PASSWORD=blog
+        - TZ=America/Sao_Paulo
+        volumes:
+            - ./backup:/backup
+            - /var/run/docker.sock:/var/run/docker.sock
+            - type: bind
+              source: ./data_postgresql
+              target: /var/lib/postgresql/data
+        ports:
+        - "5432:5432"
+        shm_size: '1gb'
+        networks:
+            - proxy
 networks:
     proxy:
         external: true
