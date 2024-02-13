@@ -9,6 +9,6 @@ receivers:
 - name: 'telegram'
   webhook_configs:
   - send_resolved: true
-    url: 'https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage?chat_id=-963976117'
+    url: 'https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage?chat_id=******'
     http_config:
-      bearer_token: '6167178861:AAEgmKd07-AV5xTvF6iXxYR5sl3RMm9lEQ0'
+      bearer_token: '************'
