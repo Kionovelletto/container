@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  frontail:
+    image: mthenw/frontail
+    ports:
+      - 9001:9001
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 80M
