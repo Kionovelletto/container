@@ -1,0 +1,10 @@
+# https://www.parseable.com/docs/docker-quick-start
+
+Parseable usa fluxos de log para organizar dados de log. Você pode criar um fluxo de log com uma chamada PUT para o endpoint do fluxo de log. 
+Por exemplo, o comando abaixo cria um fluxo de log chamado demo(observe demono URL).
+
+
+curl --location --request PUT \
+'http://localhost:8000/api/v1/logstream/<nome_stream>' \
+--header 'Authorization: Basic YWRtaW46YWRtaW4='
+

@@ -1,0 +1,5 @@
+mkdir logstash-agent
+cd parseable
+wget https://www.parseable.com/logstash/logstash.conf
+wget https://www.parseable.com/logstash/docker-compose.yaml
+docker-compose up -d
